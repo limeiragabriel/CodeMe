@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}{{ quiz }}{% endblock %}
+
+{% block body %}
+<div class="container-fluid questions-container">
+
+  <div class="row">
+
+    <!-- ino da esquerda -->
+    <div class="col-sm-4 col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <a href="{% url 'detail' quiz.id %}">
+            {% if quiz.quizImage %}
+              <img src="{{ quiz.quizImage }}" class="img-responsive">
+            {% else %}
+              <h3>Não há imagem para mostrar</h3>
+            {%  endif %}
+          </a>
+            <h1>{{ quiz.quizTitle }} <small> {{ quiz.matter }}</small> </h1>
+            <h2> {{ quiz.author }} <h2>
+        </div>
+      </div>
+    </div>
+
+    <!-- info direita (questoes) -->
+    <div class="col-sm-8 col-md-9">
+
+            <ul class="nav nav-pills" style="margin-bottom: 10px;">
+                <li role="presentation" class="active"><a href="{% url 'detail' quiz.id %}">Ver Tudo</a></li>
+                <li role="presentation" class="active"><a href="#">Adicionar Questão</a></li>
+            </ul>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    <h3>Questões</h3>
+
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Titulo</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for question in quiz.question_set.all %}
+                            <tr>
+                                <td>{{ question.QuesTitle }}</td>
+                                <td>
+                                    <a target="_blank" href="#">
+                                        <button type="button" class="btn btn-success btn-xs">
+                                            <span class="#"></span>&nbsp; Visualizar
+                                        </button>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="#" class="btn-ok"><span class="glyphicon glyphicon-ok"></span></a>
+                                </td>
+                                <td>
+                                    <form action="#" method="post" style="display: inline;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="question_id" value="{{ question.id }}" />
+                                        <button type="submit" class="btn btn-danger btn-xs">
+                                            <span class="glyphicon glyphicon-remove"></span>&nbsp; Remover
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+  </div>
+</div>
+{% endblock %}

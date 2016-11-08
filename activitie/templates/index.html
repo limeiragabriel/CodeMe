@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="quizs-container container-fluid">
+    <!-- quizs -->
+    <div class="row">
+        {% for quiz in all_quizs %}
+          <div class="col-sm-4 col-lg-3">
+            <div class="thumbnail">
+              <a href="{% url 'detail' quiz.id %}">
+                <img src="{{ quiz.quizImage }}" class="img-responsive">
+              </a>
+              <div class="caption">
+                <h2>{{ quiz.quizTitle }}</h2>
+                <h4>{{ quiz.matter }}</h4>
+
+                <!-- detalhes -->
+                <a href="{% url 'detail' quiz.id %}" class="btn btn-primary btn-sm" role="button">Ver</a>
+
+                <!-- Deletar -->
+                <form action="{% url 'quiz-delete' quiz.id %}" method="post" style="display: inline;">
+                  {% csrf_token %}
+                  <input type="hidden" name="quiz_id" value="{{ quiz.id }}" />
+                  <button type="submit" class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-trash"></span>
+                  </button>
+                </form>
+                <!-- Favorite Album -->
+                <a href="#" class="btn btn-default btn-sm btn-favorite" role="button">
+                  <span class="glyphicon glyphicon-ok active"></span>
+                </a>
+              </div>
+            </div>
+          </div>
+          {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
