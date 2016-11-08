@@ -8,6 +8,7 @@ class Quiz(models.Model):
     #quizImage = models.CharField(max_length=1000)
     quizImage = "https://cdn0.iconfinder.com/data/icons/flatico/512/monitor_code__editor-512.png"
 
+
     def get_absolute_url(self):
         return reverse('detail',kwargs={'pk':self.pk})
 

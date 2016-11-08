@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block title %}{{ quiz }}{% endblock %}
+{% load staticfiles %}
 
 {% block body %}
 <div class="container-fluid questions-container">
@@ -12,7 +13,7 @@
         <div class="panel-body">
           <a href="{% url 'detail' quiz.id %}">
             {% if quiz.quizImage %}
-              <img src="{{ quiz.quizImage }}" class="img-responsive">
+              <img src="{% static 'images/quiz.png' %}" class="img-responsive">
             {% else %}
               <h3>Não há imagem para mostrar</h3>
             {%  endif %}
